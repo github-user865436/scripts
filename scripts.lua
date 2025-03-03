@@ -154,6 +154,8 @@ function SolveTheMath24Card(newnumbers4, lookup)
 	return answers
 end
 
-game.ReplicatedStorage.Math24.OnServerInvoke = function(player, params, lookup)
+function AssistSolver(params, lookup)
 	return SolveTheMath24Card({params, {}}, lookup)
 end
+
+AssistSolver({3, 3, 8, 2/3}, 24)
