@@ -82,24 +82,22 @@ function API(rev, researched, halt)
 		return branches
 	else
 		function reIterate(list, count)
-			local returns = {{}}
-			local needbe = {{}, false}
+			local returns = {{}, false}
+			local needbe = {{}, true}
 			if count then print("iteratenum", count) end
+			if halt then return {list, true} end
 			for i, nlKU in list do
 				print("copynum", i)
-				if halt then
-					return nlKU
-				else
-					local nec = nlKU[1]
-					local thereturn = API(GetListOfIds(nec[#nec], lastKnownUser, true), researched, true)
+				local nec = nlKU[1]
+				local thereturn = API(GetListOfIds(nec[#nec], lastKnownUser, true), researched, true)
 
-					if type(thereturn) == "table" then
-						needbe[2] = true
-						for _, branch in branches do
-							table.insert(needbe[1], branch)
-						end
-					else
-						table.insert(returns[1], thereturn)
+				if not thereturn[2] then
+					for _, returned in thereturn do
+						table.insert(needbe[1], returned)
+					end
+				else
+					for _, returned in thereturn do
+						table.insert(returns[1], returned)
 					end
 				end
 			end
